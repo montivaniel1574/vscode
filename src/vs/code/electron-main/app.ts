@@ -1261,7 +1261,7 @@ export class CodeApplication extends Disposable {
 		const copilotManagedSettingsChannel = disposables.add(new CopilotManagedSettingsChannel(accessor.get(ICopilotManagedSettingsService)));
 		mainProcessElectronServer.registerChannel('copilotManagedSettings', copilotManagedSettingsChannel);
 
-		const fileManagedSettingsChannel = new FileManagedSettingsChannel(accessor.get(IFileManagedSettingsService));
+		const fileManagedSettingsChannel = disposables.add(new FileManagedSettingsChannel(accessor.get(IFileManagedSettingsService)));
 		mainProcessElectronServer.registerChannel('fileManagedSettings', fileManagedSettingsChannel);
 
 		// Local Files

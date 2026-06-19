@@ -4,12 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Emitter, Event } from '../../../base/common/event.js';
-import { Disposable } from '../../../base/common/lifecycle.js';
+import { Disposable, DisposableStore } from '../../../base/common/lifecycle.js';
 import { ManagedSettingsData } from '../../../base/common/policy.js';
 import { IChannel, IServerChannel } from '../../../base/parts/ipc/common/ipc.js';
 import { IFileManagedSettingsService } from './copilotManagedSettings.js';
 
 export class FileManagedSettingsChannel implements IServerChannel {
+
+	private readonly disposables = new DisposableStore();
 
 	constructor(private readonly service: IFileManagedSettingsService) { }
 
@@ -27,6 +29,10 @@ export class FileManagedSettingsChannel implements IServerChannel {
 		}
 
 		throw new Error(`Call not found: ${command}`);
+	}
+
+	dispose(): void {
+		this.disposables.dispose();
 	}
 }
 
